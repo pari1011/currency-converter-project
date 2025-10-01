@@ -1,6 +1,15 @@
-const dropdowns=document.querySelectorAll(".dropdown select")
 
+
+const dropdowns=document.querySelectorAll(".dropdown select")
+const button=document.querySelector("form button")
 // console.log(dropdowns)
+const msg=document.querySelector(".msg")
+
+
+
+
+
+
 
 
 for(let select of dropdowns){
@@ -28,8 +37,48 @@ const updateFlag=(element)=>{
     let newSrc=`https://flagsapi.com/${countryCode}/flat/64.png`
     let img= element.parentElement.querySelector("img")
     img.src=newSrc
-
 }
+
+
+const fromCurr=document.querySelector(".from select")
+const toCurr=document.querySelector(".to select")
+
+
+
+const updateExchangeRate=async ()=>{
+     let amount=document.querySelector(".amount input")
+    let amtValue=amount.value
+    if(amtValue=="" || amtValue<1){
+        amtValue=1;
+        amount.value="1"
+    }
+
+    const URL = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromCurr.value.toLowerCase()}.json`;
+    let response = await fetch(URL);
+    let data = await response.json();
+
+    let rate = data[fromCurr.value.toLowerCase()][toCurr.value.toLowerCase()];
+    let newAmount=amtValue*rate
+    msg.innerText=`${amtValue}${fromCurr.value}=${newAmount}${toCurr.value}`
+}
+
+
+window.addEventListener("load", ()=>{
+    updateExchangeRate()
+})
+
+
+button.addEventListener("click", (evt) => {
+    evt.preventDefault()
+    updateExchangeRate()
+   
+
+
+
+
+    
+})
+
 
 
 
