@@ -76,6 +76,7 @@ form input{
 .msg{
     margin-top: 2rem;
     margin-bottom: 2rem;
+    text-align: center;
 }
 
 form button{
